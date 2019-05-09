@@ -3,7 +3,7 @@
   tasks:
   - name: Setup prerequisites
     import_role:
-      name: '/home/hamza/projects/elasticsearch_ansible/roles/prerequisites/'
+      name: './roles/prerequisites/'
 
 - hosts: es-master-nodes
   become: yes
@@ -16,7 +16,7 @@
     master_hosts: "{{ groups['es-master-nodes'] | map('extract', hostvars, ['ansible_host']) | join(',') }}"
   tasks:
   - import_role:
-      name: '/home/hamza/projects/elasticsearch_ansible/roles/es_node/'
+      name: './roles/es_node/'
 
 - hosts: es-data-nodes
   become: yes
@@ -29,4 +29,4 @@
     master_hosts: "{{ groups['es-master-nodes'] | map('extract', hostvars, ['ansible_host']) | join(',') }}"
   tasks:
   - import_role:
-      name: '/home/hamza/projects/elasticsearch_ansible/roles/es_node/'
+      name: './roles/es_node/'
