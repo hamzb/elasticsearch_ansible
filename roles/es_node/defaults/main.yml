@@ -1,0 +1,7 @@
+es_cluster_name: elasticsearch-cluster
+docker_image: elasticsearch:6.7.1
+is_master_node: "true"
+is_data_node: "true"
+java_opts: "-Xms512m -Xmx512m"
+min_master_number: "2"
+master_hosts: [elasticsearch]

@@ -1,0 +1,17 @@
+- name: set sysctl config
+  sysctl:
+    name: vm.max_map_count
+    value: 262144
+    state: present
+    reload: yes
+- name: Update repositories cache and install "python-pip" package
+  apt:
+    name: [python-pip, python3-pip]
+    update_cache: yes
+- name: Install docker pip package 
+  pip:
+    name: docker
+- name: Install Docker
+  import_role:
+    name: '/home/hamza/projects/ansible/roles/docker'
+  

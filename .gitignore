@@ -1,0 +1,8 @@
+*.txt
+*.tf*
+*.log
+vagrantfile
+*vagrant*
+*terraform*
+*ssh*
+*.retry

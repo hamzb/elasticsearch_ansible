@@ -1,0 +1,17 @@
+- name: Run Elasticsearch Container
+  docker_container:
+    name: elasticsearch
+    image: "{{docker_image}}"
+    recreate: yes
+    restart_policy: "unless-stopped"
+    network_mode: "host"
+    env:
+        cluster.name: "{{ es_cluster_name }}"
+        node.name: "{{ ansible_nodename }}"
+        node.master: "{{is_master_node}}"
+        node.data: "{{is_data_node}}"
+        discovery.zen.ping.unicast.hosts: "{{master_hosts}}"
+        discovery.zen.minimum_master_nodes: "{{min_master_number}}"
+        ES_JAVA_OPTS: "{{java_opts}}"
+    env_file: "{{env_variables_file | default(omit)}}"
+    

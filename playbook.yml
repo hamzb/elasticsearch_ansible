@@ -1,0 +1,32 @@
+- hosts: all
+  become: yes
+  tasks:
+  - name: Setup prerequisites
+    import_role:
+      name: '/home/hamza/projects/elasticsearch_ansible/roles/prerequisites/'
+
+- hosts: es-master-nodes
+  become: yes
+  gather_facts: no
+  vars:
+    is_master_node: "true"
+    is_data_node: "false"
+    es_cluster_name: "awesome_cluster"
+    min_master_number: "2"
+    master_hosts: "{{ groups['es-master-nodes'] | map('extract', hostvars, ['ansible_host']) | join(',') }}"
+  tasks:
+  - import_role:
+      name: '/home/hamza/projects/elasticsearch_ansible/roles/es_node/'
+
+- hosts: es-data-nodes
+  become: yes
+  gather_facts: no
+  vars:
+    is_master_node: "false"
+    is_data_node: "true"
+    es_cluster_name: "awesome_cluster"
+    min_master_number: "2"
+    master_hosts: "{{ groups['es-master-nodes'] | map('extract', hostvars, ['ansible_host']) | join(',') }}"
+  tasks:
+  - import_role:
+      name: '/home/hamza/projects/elasticsearch_ansible/roles/es_node/'
